@@ -28,7 +28,7 @@ RUN cd /tmp && unzip Jansson-v2.7.zip && rm -f Jansson-v2.7.zip \
 	&& sh autoreconf -i && ./configure && make && make install \
 	&& cd /tmp && rm -rf jansson-2.7 
 
-OPY dist/Libevent-release-2.0.22-stable.zip /tmp/Libevent-release-2.0.22-stable.zip
+COPY dist/Libevent-release-2.0.22-stable.zip /tmp/Libevent-release-2.0.22-stable.zip
 RUN cd /tmp && unzip Libevent-release-2.0.22-stable.zip && rm -f Libevent-release-2.0.22-stable.zip \
 	&& cd Libevent-release-2.0.22-stable \
 	&& sh autogen.sh && ./configure && make && make install \
