@@ -57,3 +57,28 @@ RUN cd /tmp && wget https://github.com/alanxz/rabbitmq-c/archive/v0.7.1.zip \
 	&& cmake -DCMAKE_INSTALL_PREFIX=/usr .. \
 	&& cmake --build . --config Release --target install \
 	&& cd /tmp && rm -rf rabbitmq-c-0.7.1 
+
+RUN yum -y install php56u php56u-devel
+RUN yum -y install php56u-tidy
+
+COPY dist/phpjansson.tgz /tmp/phpjansson.tgz
+RUN cd /tmp && tar -zxf phpjansson.tgz && rm -f phpjansson.tgz \
+        && cd /tmp/phpjansson \
+        && phpize \
+        && ./configure --with-jansson && make && make install
+COPY ini/60-jansson.ini /etc/php.d/60-jansson.ini
+
+COPY dist/php-zmq-1.1.2.zip /tmp/php-zmq-1.1.2.zip
+RUN cd /tmp && unzip php-zmq-1.1.2.zip \
+        && cd /tmp/php-zmq-1.1.2 \
+        && phpize \
+        && ./configure && make && make install
+COPY ini/50-zmq.ini /etc/php.d/50-zmq.ini
+
+RUN cd /tmp && wget https://github.com/pdezwart/php-amqp/archive/v1.6.1.zip \
+        && unzip v1.6.1.zip && rm -f v1.6.1.zip \
+        && cd php-amqp-1.6.1 \
+        && phpize && ./configure --with-amqp && make && make install \
+        && cd /tmp && rm -rf php-amqp-1.6.1
+COPY ini/60-amqp.ini /etc/php.d/60-amqp.ini
+
