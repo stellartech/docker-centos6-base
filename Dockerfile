@@ -51,3 +51,9 @@ RUN cd /tmp && unzip CZMQ-v3.0.2.zip && rm -f CZMQ-v3.0.2.zip \
 	&& sh autogen.sh && ./configure && make && make install \
 	&& cd /tmp && rm -rf czmq-3.0.2 
 
+RUN cd /tmp && wget https://github.com/alanxz/rabbitmq-c/archive/v0.7.1.zip \
+	&& unzip v0.7.1.zip && rm -f v0.7.1.zip \
+	&& cd rabbitmq-c-0.7.1 && mkdir _build && cd _build \
+	&& cmake -DCMAKE_INSTALL_PREFIX=/usr .. \
+	&& cmake --build . --config Release --target install \
+	&& cd /tmp && rm -rf rabbitmq-c-0.7.1 
